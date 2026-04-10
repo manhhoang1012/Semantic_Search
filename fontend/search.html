@@ -1,39 +1,4 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Semantic Search</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
 
-<h1>🔍 Semantic Search Reddit</h1>
-<div style="margin-bottom: 20px;">
-    <button onclick="goToIndex()">📋 Manage Posts</button>
-</div>
-
-<input type="text" id="query" placeholder="Nhập nội dung tìm kiếm...">
-<input type="number" id="top_k" value="5">
-
-<select id="subreddit">
-    <option value="">All</option>
-    <option value="funny">funny</option>
-    <option value="pics">pics</option>
-</select>
-
-<button onclick="handleSearch()">Search</button>
-
-<div id="results"></div>
-
-<script src="js/api.js"></script>
-<script src="js/search.js"></script>
-<script>
-function goToIndex() {
-    window.location.href = "index.html";
-}
-</script>
-
-</body>
-</html> -->
 
 
 <!DOCTYPE html>
@@ -78,6 +43,9 @@ function goToIndex() {
     <!-- RESULTS -->
     <div id="results" class="row"></div>
 
+</div>
+<div class="alert alert-info" id="latency">
+    ⏱ Response time: ...
 </div>
 
 <script src="js/api.js"></script>

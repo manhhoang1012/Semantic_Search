@@ -13,4 +13,4 @@ app.register_blueprint(search_bp, url_prefix="/api")
 app.register_blueprint(crud_bp, url_prefix="/api")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+     app.run(debug=True)
