@@ -20,6 +20,12 @@ def delete_vector(id):
     index = get_index()
     index.delete(ids=[id])
 
+def delete_vectors_by_parent_id(parent_id):
+    index = get_index()
+    # Delete the old ID format + potential chunk IDs
+    ids_to_delete = [parent_id] + [f"{parent_id}_{i}" for i in range(100)]
+    index.delete(ids=ids_to_delete)
+
 def get_stats():
     index = get_index()
     stats = index.describe_index_stats()
