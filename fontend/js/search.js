@@ -125,19 +125,7 @@ function displayResults(results) {
                     <p><b>Score:</b> ${item.metadata.score}</p>
                     <p><b>Similarity:</b> ${item.score.toFixed(4)}</p>
 
-                    <div class="d-flex justify-content-between">
-
-                        <button class="btn btn-success btn-sm"
-                            onclick="handleUpdate('${item.id}', '${safeId}')">
-                            Update
-                        </button>
-
-                        <button class="btn btn-danger btn-sm"
-                            onclick="handleDelete('${item.id}')">
-                            Delete
-                        </button>
-
-                    </div>
+                   
 
                 </div>
             </div>
@@ -175,3 +163,18 @@ async function handleUpdate(realId, safeId) {
     alert("Updated!");
     handleSearch(); // reload
 }
+
+
+//  <div class="d-flex justify-content-between">
+
+//                         <button class="btn btn-success btn-sm"
+//                             onclick="handleUpdate('${item.id}', '${safeId}')">
+//                             Update
+//                         </button>
+
+//                         <button class="btn btn-danger btn-sm"
+//                             onclick="handleDelete('${item.id}')">
+//                             Delete
+//                         </button>
+
+//                     </div>

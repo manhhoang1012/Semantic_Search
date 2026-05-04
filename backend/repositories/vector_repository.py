@@ -1,6 +1,7 @@
 
 
 from backend.services.pinecone_service import get_index
+from backend.config import MODEL_DIMENSION
 
 index = get_index()
 
@@ -21,7 +22,7 @@ def delete_vector(id):
 # 🔥 thêm mới
 def get_all_vectors(limit=20):
     return index.query(
-        vector=[0.0] * 384,  # dummy vector
+        vector=[0.0] * MODEL_DIMENSION,  # dummy vector
         top_k=limit,
         include_metadata=True
     )

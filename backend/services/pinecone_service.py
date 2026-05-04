@@ -1,9 +1,9 @@
 from pinecone import Pinecone, ServerlessSpec
-from backend.config import PINECONE_API_KEY, INDEX_NAME
+from backend.config import PINECONE_API_KEY, INDEX_NAME, MODEL_DIMENSION
 
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-def create_index_if_not_exists(dimension=384):
+def create_index_if_not_exists(dimension=MODEL_DIMENSION):
     if INDEX_NAME not in [i["name"] for i in pc.list_indexes()]:
         pc.create_index(
             name=INDEX_NAME,
