@@ -31,6 +31,7 @@ from backend.repositories.vector_repository import (
     delete_vector,
     get_all_vectors
 )
+from backend.models.post_model import Post
 
 crud_bp = Blueprint("crud", __name__)
 
@@ -38,13 +39,25 @@ crud_bp = Blueprint("crud", __name__)
 @crud_bp.route("/add", methods=["POST"])
 def add():
     data = request.json
+    
+    try:
+        post = Post(
+            id=data["id"],
+            title=data["title"],
+            subreddit=data.get("subreddit", ""),
+            score=data.get("score", 0),
+            comments=data.get("comments", 0),
+            username=data.get("username", "")
+        )
+    except KeyError as e:
+        return jsonify({"error": f"Missing required field: {e}"}), 400
 
-    vector = embed_text(data["title"])
+    vector = embed_text(post.title)
 
     upsert_vectors([(
-        data["id"],
+        str(post.id),
         vector,
-        data
+        post.to_dict()
     )])
 
     return jsonify({"message": "Saved!"})
@@ -60,13 +73,29 @@ def delete(id):
 # 📋 LIST DATA
 @crud_bp.route("/list", methods=["GET"])
 def get_list():
-    results = get_all_vectors()
+    try:
+        limit = int(request.args.get("limit", 20))
+    except ValueError:
+        limit = 20
+        
+    pagination_token = request.args.get("pagination_token")
+
+    results = get_all_vectors(limit=limit, pagination_token=pagination_token)
 
     output = []
-    for item in results["matches"]:
+    for item in results.get("matches", []):
+        meta = item.get("metadata", {})
+        post = Post(
+            id=item["id"],
+            title=meta.get("title", ""),
+            subreddit=meta.get("subreddit", ""),
+            score=meta.get("score", 0),
+            comments=meta.get("comments", 0),
+            username=meta.get("username", "")
+        )
         output.append({
-            "id": item["id"],
-            "metadata": item["metadata"]
+            "id": post.id,
+            "metadata": post.to_dict()
         })
 
     return jsonify(output)
