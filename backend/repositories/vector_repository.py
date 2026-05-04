@@ -20,6 +20,15 @@ def delete_vector(id):
     index = get_index()
     index.delete(ids=[id])
 
+def get_stats():
+    index = get_index()
+    stats = index.describe_index_stats()
+    print("Pinecone Stats Response:", stats)
+    
+    if hasattr(stats, 'to_dict'):
+        return stats.to_dict()
+    return dict(stats)
+
 # 🔥 thêm mới
 def get_all_vectors(limit=20, pagination_token=None):
     index = get_index()
@@ -33,7 +42,9 @@ def get_all_vectors(limit=20, pagination_token=None):
             ids.extend(id_chunk)
             if len(ids) >= limit:
                 break
-    except Exception:
+        print(f"Listed {len(ids)} ids from Pinecone.")
+    except Exception as e:
+        print(f"Error listing vectors: {e}")
         pass
 
     ids = ids[:limit]

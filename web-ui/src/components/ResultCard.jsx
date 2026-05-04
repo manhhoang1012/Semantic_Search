@@ -1,17 +1,28 @@
 import { MessageSquare, ArrowBigUp } from 'lucide-react';
+import { highlightText } from '../utils/highlight';
 
-const ResultCard = ({ item }) => {
+const ResultCard = ({ item, query }) => {
   const meta = item.metadata || {};
   const score = item.score ? (item.score * 100).toFixed(1) : 0;
 
   return (
     <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-indigo-500 transition-colors duration-300 shadow-sm hover:shadow-indigo-500/10">
       <div className="flex justify-between items-start mb-2">
-        <h3 className="text-xl font-bold text-white mb-2">{meta.title || "Untitled Post"}</h3>
+        <h3 
+          className="text-xl font-bold text-white mb-2" 
+          dangerouslySetInnerHTML={{ __html: highlightText(meta.title || "Untitled Post", query) }} 
+        />
         <span className="bg-indigo-900 text-indigo-300 text-xs font-semibold px-2.5 py-0.5 rounded ml-3 shrink-0">
           Match: {score}%
         </span>
       </div>
+      
+      {meta.content && (
+        <p 
+          className="text-gray-300 text-sm mb-4 line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: highlightText(meta.content, query) }}
+        />
+      )}
       
       <div className="flex items-center text-sm text-gray-400 gap-4 mt-4">
         {meta.subreddit && (

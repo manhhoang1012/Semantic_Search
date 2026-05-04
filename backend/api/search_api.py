@@ -34,6 +34,7 @@ def search():
         post = Post(
             id=match["id"],
             title=meta.get("title", ""),
+            content=meta.get("content", ""),
             subreddit=meta.get("subreddit", ""),
             score=meta.get("score", 0),
             comments=meta.get("comments", 0),
