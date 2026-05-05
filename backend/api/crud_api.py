@@ -57,6 +57,8 @@ def add():
         score = data.get("score", 0)
         comments = data.get("comments", 0)
         username = data.get("username", "")
+        category = data.get("category", "")
+        author = data.get("author", "")
     except KeyError as e:
         return jsonify({"error": f"Missing required field: {e}"}), 400
 
@@ -74,7 +76,9 @@ def add():
             comments=comments,
             username=username,
             parent_id=parent_id,
-            chunk_index=idx
+            chunk_index=idx,
+            category=category,
+            author=author
         )
         
         text_to_embed = f"{title}. {chunk}"
@@ -128,7 +132,9 @@ def get_list():
                 comments=meta.get("comments", 0),
                 username=meta.get("username", ""),
                 parent_id=parent_id,
-                chunk_index=meta.get("chunk_index", 0)
+                chunk_index=meta.get("chunk_index", 0),
+                category=meta.get("category", ""),
+                author=meta.get("author", "")
             )
             grouped_output[parent_id] = {
                 "id": post.id,

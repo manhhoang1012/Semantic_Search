@@ -45,7 +45,9 @@ def search():
                 comments=meta.get("comments", 0),
                 username=meta.get("username", ""),
                 parent_id=parent_id,
-                chunk_index=meta.get("chunk_index", 0)
+                chunk_index=meta.get("chunk_index", 0),
+                category=meta.get("category", ""),
+                author=meta.get("author", "")
             )
             grouped_output[parent_id] = {
                 "id": post.id,
