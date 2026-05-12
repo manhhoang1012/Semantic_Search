@@ -6,7 +6,13 @@ import os
 
 from backend.api.search_api import search_bp
 from backend.api.crud_api import crud_bp
+from backend.api.search_api import router
 
+from fastapi import FastAPI
+
+app = FastAPI()
+
+app.include_router(router)
 app = Flask(__name__)
 import os
 
