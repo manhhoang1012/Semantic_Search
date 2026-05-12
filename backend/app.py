@@ -8,7 +8,15 @@ from backend.api.search_api import search_bp
 from backend.api.crud_api import crud_bp
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173", "http://127.0.0.1:5173"]}})
+import os
+
+# Allow CORS for Vercel and local development
+# In production, you might want to restrict this to your Vercel domain
+allowed_origins = os.environ.get("ALLOWED_ORIGINS", "*")
+if allowed_origins != "*":
+    allowed_origins = allowed_origins.split(",")
+
+CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
 
 app.register_blueprint(search_bp, url_prefix="/api")
 app.register_blueprint(crud_bp, url_prefix="/api")
